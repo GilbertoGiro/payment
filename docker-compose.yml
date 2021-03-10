@@ -1,0 +1,18 @@
+version: "3"
+
+networks:
+  network:
+
+services:
+  app:
+    build:
+      context: ./docker
+      dockerfile: ./Dockerfile
+    volumes:
+      - .:/opt/payment
+    networks:
+      - network
+    ports:
+      - 80:80
+    restart: unless-stopped
+    command: ./docker/entrypoint.sh
