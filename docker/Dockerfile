@@ -9,7 +9,7 @@ WORKDIR /opt/payment
 # Update ubuntu packages list and install necessary packages
 RUN apt-get -y update && \
     apt-get -y install php7.4 php7.4-xml php7.4-mbstring php7.4-zip \
-    php-fpm supervisor nginx tzdata curl zip unzip
+    php7.4-mysql php-fpm supervisor nginx tzdata curl zip unzip
 
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php \
@@ -40,7 +40,11 @@ ADD nginx/default.conf /etc/nginx/conf.d/
 # Apply custom supervisor file
 ADD supervisor/supervisord.conf /etc/supervisor/conf.d/
 
-# Run supervisor command in background (PHP and NGINX)
+# Wait script
+ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.8.0/wait /wait
+RUN chmod +x /wait
+
+# Run supervisor command in background (PHP-FPM and NGINX)
 CMD /usr/bin/supervisord -n
 
 # Expose port

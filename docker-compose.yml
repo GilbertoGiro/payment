@@ -4,15 +4,34 @@ networks:
   network:
 
 services:
+  mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: 'payment'
+      MYSQL_USER: 'admin'
+      MYSQL_PASSWORD: 'secret'
+      MYSQL_ROOT_PASSWORD: 'secret'
+    networks:
+      - network
+    ports:
+      - 3306:3306
+    expose:
+      - 3306
+    restart: always
+
   app:
     build:
       context: ./docker
       dockerfile: ./Dockerfile
     volumes:
       - .:/opt/payment
+    environment:
+      WAIT_HOSTS: mysql:3306
     networks:
       - network
     ports:
       - 80:80
+    depends_on:
+      - mysql
     restart: unless-stopped
     command: ./docker/entrypoint.sh
