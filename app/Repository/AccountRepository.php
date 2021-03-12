@@ -14,4 +14,13 @@ class AccountRepository extends AbstractRepository
     {
         parent::__construct($model);
     }
+
+    /**
+     * Method to get all model rows count
+     * @return int
+     */
+    public function allRowsCount(): int
+    {
+        return $this->model->all()->count();
+    }
 }

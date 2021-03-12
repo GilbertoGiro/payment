@@ -3,6 +3,9 @@
 echo "===> Wait until mysql is ready"
 /wait
 
+# Apply necessary permissions for storage path
+chmod -R 774 /opt/payment/storage
+
 # Copy environment file
 echo "===> Copying environment file"
 cp /opt/payment/.env.example /opt/payment/.env

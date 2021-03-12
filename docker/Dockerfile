@@ -16,6 +16,10 @@ RUN curl -sS https://getcomposer.org/installer | php \
     && mv composer.phar /usr/local/bin/composer \
     && chmod +x /usr/local/bin/composer
 
+# Install Wait script
+ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.8.0/wait /wait
+RUN chmod +x /wait
+
 # Set Timezone
 RUN echo "America/Sao_Paulo" > /etc/timezone
 RUN dpkg-reconfigure -f noninteractive tzdata
@@ -40,9 +44,10 @@ ADD nginx/default.conf /etc/nginx/conf.d/
 # Apply custom supervisor file
 ADD supervisor/supervisord.conf /etc/supervisor/conf.d/
 
-# Wait script
-ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.8.0/wait /wait
-RUN chmod +x /wait
+# Create group and apply for www-data user
+RUN groupadd payment && \
+    usermod -a -G payment www-data && \
+    chgrp -R payment /opt/payment
 
 # Run supervisor command in background (PHP-FPM and NGINX)
 CMD /usr/bin/supervisord -n
