@@ -15,6 +15,10 @@ composer install --no-interaction
 echo "===> Running migrations"
 php artisan migrate
 
+# Run seeders
+echo "===> Running seeders"
+php artisan db:seed
+
 # Run supervisor
 echo "===> Running supervisor"
 /usr/bin/supervisord -n

@@ -11,6 +11,7 @@ services:
       MYSQL_USER: 'admin'
       MYSQL_PASSWORD: 'secret'
       MYSQL_ROOT_PASSWORD: 'secret'
+      TZ: 'America/Sao_Paulo'
     networks:
       - network
     ports:
