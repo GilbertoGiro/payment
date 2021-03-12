@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Role;
 use Illuminate\Database\Seeder;
-use App\Repository\RoleRepository;
+use App\Repositories\RoleRepository;
 
 class RoleTableSeeder extends Seeder
 {

@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Laravel\Lumen\Routing\Controller;
-
-class IndexController extends Controller
+class IndexController extends AbstractController
 {
     /**
      * Method to load application home page

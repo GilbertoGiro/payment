@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Permission;
 use Illuminate\Database\Seeder;
-use App\Repository\PermissionRepository;
+use App\Repositories\PermissionRepository;
 
 class PermissionTableSeeder extends Seeder
 {

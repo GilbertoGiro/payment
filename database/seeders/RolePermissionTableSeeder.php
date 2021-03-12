@@ -6,9 +6,9 @@ use App\Models\Role;
 use App\Models\Permission;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use App\Repository\RoleRepository;
-use App\Repository\PermissionRepository;
-use App\Repository\RolePermissionRepository;
+use App\Repositories\RoleRepository;
+use App\Repositories\PermissionRepository;
+use App\Repositories\RolePermissionRepository;
 
 class RolePermissionTableSeeder extends Seeder
 {

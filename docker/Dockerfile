@@ -9,7 +9,7 @@ WORKDIR /opt/payment
 # Update ubuntu packages list and install necessary packages
 RUN apt-get -y update && \
     apt-get -y install php7.4 php7.4-xml php7.4-mbstring php7.4-zip \
-    php7.4-mysql php-fpm supervisor nginx tzdata curl zip unzip
+    php7.4-mysql php-fpm supervisor nginx tzdata curl zip unzip vim
 
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php \
@@ -41,13 +41,17 @@ RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 # Apply default nginx configuration
 ADD nginx/default.conf /etc/nginx/conf.d/
 
+# Define paths for permissions
+ARG permission_paths='/opt/payment /var/log /tmp'
+
 # Apply custom supervisor file
 ADD supervisor/supervisord.conf /etc/supervisor/conf.d/
 
-# Create group and apply for www-data user
+# Create group and apply for permissions for www-data user
 RUN groupadd payment && \
     usermod -a -G payment www-data && \
-    chgrp -R payment /opt/payment
+    chgrp -R payment $permission_paths && \
+    chmod -R 774 $permission_paths
 
 # Run supervisor command in background (PHP-FPM and NGINX)
 CMD /usr/bin/supervisord -n

@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\TransactionType;
-use App\Repository\TransactionTypeRepository;
+use App\Repositories\TransactionTypeRepository;
 use Illuminate\Support\Facades\DB;
 
 class TransactionTypeTableSeeder extends Seeder

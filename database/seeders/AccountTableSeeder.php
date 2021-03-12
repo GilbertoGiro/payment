@@ -3,8 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\Account;
-use App\Repository\AccountRepository;
 use Illuminate\Database\Seeder;
+use App\Repositories\AccountRepository;
 
 class AccountTableSeeder extends Seeder
 {

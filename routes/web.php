@@ -14,3 +14,4 @@
 */
 
 $router->get('/', ['uses' => 'IndexController@index']);
+$router->post('/transaction', ['uses' => 'TransactionController@transfer']);
