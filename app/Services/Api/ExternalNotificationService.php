@@ -2,11 +2,11 @@
 
 namespace App\Services\Api;
 
-use App\Traits\Client;
 use App\Models\Parameter;
 use App\Repositories\ParameterRepository;
+use App\Traits\Client;
 
-class ExternalAuthorizeService
+class ExternalNotificationService
 {
     use Client;
 
@@ -14,7 +14,7 @@ class ExternalAuthorizeService
      * Variable who specify when service is authorized
      * @var string
      */
-    const AUTHORIZED = 'Autorizado';
+    const AUTHORIZED = 'Enviado';
 
     /**
      * Variable who contains parameter repository
@@ -32,15 +32,15 @@ class ExternalAuthorizeService
     }
 
     /**
-     * Method to check if external service authorize action
+     * Method to publish notification on external service
      * @throws \Exception
      */
-    public function authorize()
+    public function notify()
     {
         // Call external service to check if it authorize action
         $response = $this->__requestWithTries(
-            $this->parameterRepository->getValue(Parameter::EXTERNAL_AUTHORIZER_URL),
-            'get',
+            $this->parameterRepository->getValue(Parameter::EXTERNAL_NOTIFICATION_URL),
+            'post',
             [],
             3,
             5,

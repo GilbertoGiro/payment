@@ -31,7 +31,7 @@ trait Client
                 sleep($betweenTriesTime);
             }
         } while ($tries);
-        // If couldn't communicate
+        // If couldn't communicate throw exception
         $this->serviceUnavailableError();
     }
 
@@ -68,7 +68,7 @@ trait Client
      * Method to throw service unavailable exception
      * @throws \Exception
      */
-    private function serviceUnavailableError()
+    protected function serviceUnavailableError()
     {
         throw new \Exception('External authorizer service is unvailable.', 500);
     }

@@ -104,11 +104,11 @@ abstract class AbstractRepository
 
     /**
      * Method to update Model Object
-     * @param array $data
      * @param int $id
+     * @param array $data
      * @return bool
      */
-    public function update(array $data, int $id): bool
+    public function update(int $id, array $data): bool
     {
         return $this->model->find($id)->update($data);
     }

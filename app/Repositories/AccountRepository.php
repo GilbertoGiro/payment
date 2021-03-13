@@ -23,4 +23,16 @@ class AccountRepository extends AbstractRepository
     {
         return $this->model->all()->count();
     }
+
+    /**
+     * Method to find account by user id, lock it and update it balance
+     * @param int $userId
+     * @param float $balance
+     */
+    public function lockAndUpdateBalanceByUserId(int $userId, float $balance)
+    {
+        $account = $this->find($userId)->lockForUpdate();
+        $account->balance = $balance;
+        $account->save();
+    }
 }

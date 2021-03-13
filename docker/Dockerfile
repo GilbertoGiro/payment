@@ -9,7 +9,8 @@ WORKDIR /opt/payment
 # Update ubuntu packages list and install necessary packages
 RUN apt-get -y update && \
     apt-get -y install php7.4 php7.4-xml php7.4-mbstring php7.4-zip \
-    php7.4-mysql php-fpm supervisor nginx tzdata curl zip unzip vim
+    php7.4-mysql php7.4-bcmath php-fpm supervisor nginx tzdata curl \
+    zip unzip vim
 
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php \

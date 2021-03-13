@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
 use App\Services\TransactionService;
 use App\Http\Requests\TransactionRequest;
-use Illuminate\Http\JsonResponse;
 
 class TransactionController extends AbstractController
 {
