@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\TransactionService;
-use App\Http\Requests\TransferRequest;
+use App\Http\Requests\TransactionRequest;
 use Illuminate\Http\JsonResponse;
 
 class TransactionController extends AbstractController
@@ -25,10 +25,10 @@ class TransactionController extends AbstractController
 
     /**
      * Action responsible for transfer money between users
-     * @param TransferRequest $request
+     * @param TransactionRequest $request
      * @return JsonResponse
      */
-    public function transfer(TransferRequest $request): JsonResponse
+    public function transfer(TransactionRequest $request): JsonResponse
     {
         return $this->transactionService->transfer($request->all());
     }

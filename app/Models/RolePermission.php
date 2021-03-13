@@ -5,6 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
+/**
+ * Class RolePermission
+ * @property Role $role
+ * @property Permission $permission
+ * @package App\Models
+ */
 class RolePermission extends Model
 {
     /**
@@ -30,6 +36,6 @@ class RolePermission extends Model
      */
     public function permission(): HasOne
     {
-        return $this->hasOne(Role::class, 'id', 'role_id');
+        return $this->hasOne(Permission::class, 'id', 'permission_id');
     }
 }

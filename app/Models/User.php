@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
+/**
+ * Class User
+ * @property Role $role
+ * @package App\Models
+ */
 class User extends Model
 {
     use HasFactory, SoftDeletes;

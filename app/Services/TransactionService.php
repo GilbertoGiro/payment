@@ -2,11 +2,15 @@
 
 namespace App\Services;
 
-use App\Repositories\TransactionRepository;
+use App\Traits\Response;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
+use App\Repositories\TransactionRepository;
 
 class TransactionService
 {
+    use Response;
+
     /**
      * Variable who contains transaction repository
      * @var TransactionRepository
@@ -30,6 +34,13 @@ class TransactionService
      */
     public function transfer(array $data): JsonResponse
     {
-        return response()->json();
+        DB::beginTransaction();
+        try {
+            // Commit transaction
+            DB::commit();
+        } catch (\Exception $e) {
+            // Rollback transaction
+            DB::rollback();
+        }
     }
 }

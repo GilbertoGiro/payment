@@ -4,6 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Role
+ * @property RolePermission $rolePermission
+ * @package App\Models
+ */
 class Role extends Model
 {
     /**
