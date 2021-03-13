@@ -46,4 +46,15 @@ abstract class AbstractRequest extends Request
     {
         $this->validate($request, $this->rules(), $this->messages());
     }
+
+    /**
+     * Method to retrieve custom validation response (If fail)
+     * @param Request $request
+     * @param array $errors
+     * @return array
+     */
+    protected function buildFailedValidationResponse(Request $request, array $errors): array
+    {
+        return ['code' => 400, 'message' => 'Houve problemas de validação de alguns campos', 'errors' => $errors];
+    }
 }
