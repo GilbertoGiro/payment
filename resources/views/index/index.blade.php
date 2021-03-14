@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-    Olá mundo!
+    Aplicação rodando.
 @endsection

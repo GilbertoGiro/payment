@@ -12,6 +12,6 @@ trait Log
      */
     public static function errorLog(\Exception $e)
     {
-        LogFacade::error("[{$e->getCode()}] {$e->getMessage()} in {$e->getFile()}:{$e->getLine()}");
+        LogFacade::error(sprintf('[%s] - %s in %s:%s', $e->getCode(), $e->getMessage(), $e->getFile(), $e->getLine()));
     }
 }
