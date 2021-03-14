@@ -16,7 +16,7 @@ class CustomValidationServiceProvider extends ServiceProvider
     {
         // Float validation
         Validator::extend('float', function ($attribute, $value, $parameters) {
-            return is_float($value);
+            return is_numeric($value) && is_float((float) $value);
         });
         // Check if two parameters are not equal
         Validator::extend('not_equal_to', function ($attribute, $value, $parameters) {

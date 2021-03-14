@@ -1,0 +1,127 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Payment API",
+        "contact": {
+            "name": "Gilberto Resende",
+            "email": "gilberto.giro.resende@gmail.com"
+        },
+        "version": "1.0"
+    },
+    "paths": {
+        "/transaction": {
+            "post": {
+                "tags": [
+                    "Transferir"
+                ],
+                "summary": "Transferir um determinado valor entre dois usuários",
+                "operationId": "/transaction",
+                "parameters": [
+                    {
+                        "name": "payer",
+                        "in": "query",
+                        "description": "ID do remetente",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "payee",
+                        "in": "query",
+                        "description": "ID do destinatário",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "value",
+                        "in": "query",
+                        "description": "Valor a ser transferido",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Quando a transferência for bem sucedida.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Transferência efetuada com sucesso."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Quando houver erros de validação nos campos enviados no corpo da requisição.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 500
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Houve problemas de validação de alguns campos"
+                                        },
+                                        "errors": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "payer": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "example": "O campo payer só aceita valores decimais"
+                                                        }
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Quando houver problemas internos durante a execução.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 500
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Serviço indisponivel. Tente novamente mais tarde."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
