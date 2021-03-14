@@ -14,6 +14,10 @@ cp /opt/payment/.env.example /opt/payment/.env
 echo "===> Running composer"
 composer install --no-interaction
 
+# Regenerate API documentation
+echo "===> Generating API documentation"
+php artisan swagger-lume:generate
+
 # Run migrations
 echo "===> Running migrations"
 php artisan migrate
