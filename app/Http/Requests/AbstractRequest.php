@@ -20,7 +20,7 @@ abstract class AbstractRequest extends Request
         // Call method to apply request rules
         $this->applyRules($request);
         // If request pass, then call parent constructor
-        parent::__construct();
+        parent::__construct($request->all());
     }
 
     /**
@@ -32,10 +32,30 @@ abstract class AbstractRequest extends Request
 
     /**
      * Method who specify the return messages from request validation
-     * e.g: ['email.required' => 'Field :attribute must contains an valid mail']
+     * e.g: ['required' => 'Field :attribute must be given']
      * @return array
      */
-    abstract protected function messages(): array;
+    protected function messages(): array
+    {
+        return [
+            'required' => 'O campo :attribute é obrigatório',
+            'numeric' => 'O campo :attribute só aceita valores numéricos',
+            'integer' => 'O campo :attribute só aceita valores inteiros',
+            'float' => 'O campo :attribute só aceita valores decimais',
+            'exists' => 'O usuário fornecido no campo :attribute é inválido',
+            'can' => 'O usuário fornecido no campo :attribute não possui o permissionamento correto'
+        ];
+    }
+
+    /**
+     * Method who specify the custom return messages from request validation
+     * e.g: ['email.required' => 'We need to know your email address!']
+     * @return array
+     */
+    protected function customMessages(): array
+    {
+        return [];
+    }
 
     /**
      * Method to validate request
@@ -44,7 +64,7 @@ abstract class AbstractRequest extends Request
      */
     private function applyRules(Request $request)
     {
-        $this->validate($request, $this->rules(), $this->messages());
+        $this->validate($request, $this->rules(), array_merge($this->messages(), $this->customMessages()));
     }
 
     /**

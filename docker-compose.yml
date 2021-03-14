@@ -1,7 +1,7 @@
 version: "3"
 
 networks:
-  network:
+  payment:
 
 services:
   mysql:
@@ -13,12 +13,11 @@ services:
       MYSQL_ROOT_PASSWORD: 'secret'
       TZ: 'America/Sao_Paulo'
     networks:
-      - network
+      - payment
     ports:
       - 3306:3306
     expose:
       - 3306
-    restart: always
 
   app:
     build:
@@ -29,10 +28,9 @@ services:
     environment:
       WAIT_HOSTS: mysql:3306
     networks:
-      - network
+      - payment
     ports:
       - 80:80
     depends_on:
       - mysql
-    restart: unless-stopped
     command: ./docker/entrypoint.sh

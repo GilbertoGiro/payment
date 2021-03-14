@@ -2,16 +2,16 @@
 
 namespace App\Services;
 
-use App\Models\TransactionType;
-use App\Repositories\TransactionTypeRepository;
-use App\Services\Api\ExternalNotificationService;
 use App\Traits\Log;
 use App\Traits\Response;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\TransactionType;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Model;
 use App\Repositories\TransactionRepository;
 use App\Services\Api\ExternalAuthorizeService;
+use App\Repositories\TransactionTypeRepository;
+use App\Services\Api\ExternalNotificationService;
 
 class TransactionService
 {
@@ -68,18 +68,19 @@ class TransactionService
 
     /**
      * Method responsible for transfer money between users
-     * e.g: ['payer' => 1, 'payee' => 2, 'value' => 400.00]
-     * @param array $data
+     * @param int $userFromId
+     * @param int $userToId
+     * @param float $amount
      * @return JsonResponse
      */
-    public function transfer(array $data): JsonResponse
+    public function transfer(int $userFromId, int $userToId, float $amount): JsonResponse
     {
         DB::beginTransaction();
         try {
             // Transfer value between accounts
-            $this->accountService->transfer($data['payer'], $data['payee'], $data['value']);
-            // Create log of transaction
-            $this->logTransaction($data);
+            $this->accountService->transfer($userFromId, $userToId, $amount);
+            // Create transaction between users
+            $this->applyTransaction($userFromId, $userToId, $amount);
             // Check authorize service
             $this->externalAuthorizeService->authorize();
             // Push notification
@@ -110,16 +111,18 @@ class TransactionService
 
     /**
      * Method to log transaction between two users
-     * @param array $data
+     * @param int $userFromId
+     * @param int $userToId
+     * @param float $amount
      */
-    private function logTransaction(array $data)
+    private function applyTransaction(int $userFromId, int $userToId, float $amount)
     {
         // Get transaction date
         $transactionDate = date('Y-m-d H:i:s');
         // Create debited transaction
-        $this->createTransaction($data['payer'], $data['value'], $transactionDate, TransactionType::TYPE_DEBITED);
+        $this->createTransaction($userFromId, $amount, $transactionDate, TransactionType::TYPE_DEBITED);
         // Create credited transaction
-        $this->createTransaction($data['payee'], $data['value'], $transactionDate, TransactionType::TYPE_CREDITED);
+        $this->createTransaction($userToId, $amount, $transactionDate, TransactionType::TYPE_CREDITED);
     }
 
     /**

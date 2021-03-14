@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use App\Models\Permission;
+use App\Repositories\AccountRepository;
+use Illuminate\Support\Facades\Validator;
 
 class TransactionRequest extends AbstractRequest
 {
@@ -13,24 +15,22 @@ class TransactionRequest extends AbstractRequest
     protected function rules(): array
     {
         return [
-            'payer' => 'bail|required|numeric|exists:users,id|can:' . Permission::PERMISSION_TRANSFER,
-            'payee' => 'bail|required|numeric|exists:users,id|can:' . Permission::PERMISSION_RECEIVE,
-            'value' => 'bail|required|numeric|min:1'
+            'payer' => 'bail|required|integer|exists:users,id|can:' . Permission::PERMISSION_TRANSFER . '|has_balance:value',
+            'payee' => 'bail|required|integer|exists:users,id|can:' . Permission::PERMISSION_RECEIVE . '|not_equal_to:payer',
+            'value' => 'bail|required|numeric|float|min:1'
         ];
     }
 
     /**
-     * Method to define the return messages from request validation
+     * Method to define custom validation messages
      * @return string[]
      */
-    protected function messages(): array
+    protected function customMessages(): array
     {
         return [
-            'required' => 'O campo :attribute é obrigatório',
-            'numeric' => 'O campo :attribute só aceita valores numéricos',
-            'exists' => 'O usuário fornecido no campo :attribute é inválido',
-            'value.min' => 'O valor mínimo é 1',
-            'can' => 'O usuário fornecido no campo :attribute não possui o permissionamento correto'
-       ];
+            'payer.has_balance' => 'O usuário possui saldo insuficiente para a transação',
+            'payee.not_equal_to' => 'O destinatário da transferência não pode ser o mesmo que o remetente',
+            'value.min' => 'O valor mínimo para transferência é de R$1.00',
+        ];
     }
 }

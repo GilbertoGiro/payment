@@ -9,15 +9,6 @@ use Illuminate\Support\Facades\Validator;
 class PermissionServiceProvider extends ServiceProvider
 {
     /**
-     * PermissionServiceProvider constructor.
-     * @param $app
-     */
-    public function __construct($app)
-    {
-        parent::__construct($app);
-    }
-
-    /**
      * Register any application services.
      * @return void
      */

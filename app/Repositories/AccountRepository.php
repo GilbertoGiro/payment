@@ -25,14 +25,28 @@ class AccountRepository extends AbstractRepository
     }
 
     /**
-     * Method to find account by user id, lock it and update it balance
+     * Method to increment given value from user account
      * @param int $userId
-     * @param float $balance
+     * @param float $value
      */
-    public function lockAndUpdateBalanceByUserId(int $userId, float $balance)
+    public function increment(int $userId, float $value)
     {
-        $account = $this->find($userId)->lockForUpdate();
-        $account->balance = $balance;
+        $account = $this->findBy(['user_id' => $userId]);
+        $account->lockForUpdate();
+        $account->balance = bcadd($account->balance, $value, 2);
+        $account->save();
+    }
+
+    /**
+     * Method to decrement given value from user account
+     * @param int $userId
+     * @param float $value
+     */
+    public function decrement(int $userId, float $value)
+    {
+        $account = $this->findBy(['user_id' => $userId]);
+        $account->lockForUpdate();
+        $account->balance = bcsub($account->balance, $value, 2);
         $account->save();
     }
 }

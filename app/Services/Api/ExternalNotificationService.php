@@ -44,6 +44,7 @@ class ExternalNotificationService
             [],
             3,
             5,
+            30,
             'message'
         );
         // Check if is authorized

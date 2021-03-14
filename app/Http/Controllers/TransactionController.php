@@ -30,6 +30,8 @@ class TransactionController extends AbstractController
      */
     public function transfer(TransactionRequest $request): JsonResponse
     {
-        return $this->transactionService->transfer($request->all());
+        return $this->transactionService->transfer(
+            $request->get('payer'), $request->get('payee'), $request->get('value')
+        );
     }
 }

@@ -7,12 +7,10 @@ use Illuminate\Http\JsonResponse;
 trait Response
 {
     /**
-     * Variable who contains default messages for
-     * @var string[]
+     * Variable who specify default error message
+     * @var string
      */
-    protected $messages = [
-        500 => 'Serviço indisponivel. Tente novamente mais tarde.'
-    ];
+    protected $defaultMessage = 'Serviço indisponivel. Tente novamente mais tarde.';
 
     /**
      * Method to treat response message
@@ -36,8 +34,8 @@ trait Response
     public function errorJsonResponse(\Exception $e, $customMessage = null): JsonResponse
     {
         return response()->json([
-            'code' => $e->getCode(),
-            'message' => ($customMessage) ?: $this->messages[$e->getCode()]
+            'code' => 500,
+            'message' => ($customMessage) ?: $this->defaultMessage
         ]);
     }
 }
