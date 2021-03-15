@@ -49,7 +49,7 @@ class ExternalAuthorizeService
         );
         // Check if is authorized
         if (!$response || $response !== $this::AUTHORIZED) {
-            throw new \Exception('External service did\'t authorize action', 500);
+            throw new \Exception('External authorization service did\'t authorize action', 401);
         }
     }
 }
