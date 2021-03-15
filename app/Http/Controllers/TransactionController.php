@@ -73,7 +73,7 @@ class TransactionController extends AbstractController
      *             @OA\Property(
      *                 property="code",
      *                 type="integer",
-     *                 example=500
+     *                 example=400
      *             ),
      *             @OA\Property(
      *                 property="message",

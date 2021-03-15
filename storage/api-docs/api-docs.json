@@ -74,7 +74,7 @@
                                     "properties": {
                                         "code": {
                                             "type": "integer",
-                                            "example": 500
+                                            "example": 400
                                         },
                                         "message": {
                                             "type": "string",
