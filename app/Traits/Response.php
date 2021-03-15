@@ -65,10 +65,9 @@ trait Response
      */
     private function getResponseCode(\Exception $e): int
     {
-        if (array_key_exists($e->getCode(), $this->messages)) {
-            return $e->getCode();
-        }
-        return $this->defaultResponseCode;
+        return ($this->isValidResponseCode($e))
+            ? $e->getCode()
+            : $this->defaultResponseCode;
     }
 
     /**
@@ -78,9 +77,8 @@ trait Response
      */
     private function getResponseMessage(\Exception $e): string
     {
-        if ($this->isValidResponseCode($e)) {
-            return $this->messages[$e->getCode()];
-        }
-        return $this->messages[$this->defaultResponseCode];
+        return ($this->isValidResponseCode($e))
+            ? $this->messages[$e->getCode()]
+            : $this->messages[$this->defaultResponseCode];
     }
 }
