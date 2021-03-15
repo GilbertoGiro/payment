@@ -14,7 +14,7 @@ class ExternalNotificationService
      * Variable who specify when service is authorized
      * @var string
      */
-    const AUTHORIZED = 'Enviado';
+    const PUBLISHED = 'Enviado';
 
     /**
      * Variable who contains parameter repository
@@ -47,9 +47,9 @@ class ExternalNotificationService
             30,
             'message'
         );
-        // Check if is authorized
-        if ($response !== $this::AUTHORIZED) {
-            throw new \Exception('External service did\'t authorize action', 500);
+        // Check if message was published
+        if (!$response || $response !== $this::PUBLISHED) {
+            throw new \Exception('Could not publish message on external notification service', 500);
         }
     }
 }
