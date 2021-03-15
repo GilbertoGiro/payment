@@ -96,6 +96,22 @@ class TransactionController extends AbstractController
      *         )
      *     ),
      *     @OA\Response(
+     *         response="401",
+     *         description="Quando a autenticação falhar.",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 property="code",
+     *                 type="integer",
+     *                 example=401
+     *             ),
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Ação não autorizada."
+     *             ),
+     *         )
+     *     ),
+     *     @OA\Response(
      *         response="500",
      *         description="Quando houver problemas internos durante a execução.",
      *         @OA\JsonContent(

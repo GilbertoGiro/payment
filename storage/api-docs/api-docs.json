@@ -100,6 +100,26 @@
                             }
                         }
                     },
+                    "401": {
+                        "description": "Quando a autenticação falhar.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 401
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Ação não autorizada."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
                     "500": {
                         "description": "Quando houver problemas internos durante a execução.",
                         "content": {
