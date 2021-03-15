@@ -134,9 +134,7 @@ class TransactionService
      */
     private function createTransaction(int $userId, float $value, $transactionDate, string $transactionType)
     {
-        // Find debited transaction type
         $transactionType = $this->transactionTypeRepository->findBy(['name' => $transactionType]);
-        // Create debited transaction
         $this->create([
             'transaction_type_id' => $transactionType->id,
             'user_id' => $userId,
