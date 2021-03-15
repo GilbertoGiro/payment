@@ -42,10 +42,11 @@ trait Response
      */
     public function errorJsonResponse(\Exception $e, $customMessage = null): JsonResponse
     {
+        $responseCode = $this->getResponseCode($e);
         return response()->json([
-            'code' => $this->getResponseCode($e),
+            'code' => $responseCode,
             'message' => ($customMessage) ?: $this->getResponseMessage($e)
-        ]);
+        ], $responseCode);
     }
 
     /**
